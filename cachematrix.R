@@ -9,8 +9,12 @@
 ## inverse.
 
 makeCacheMatrix <- function(x = matrix()) {
+    ## Initaializing a NULL matrix which would be returned if the inverse 
+    ## matrix has not yet been computed
     dimMat <- dim(x)
     invMat <- matrix(0, dimMat[1], dimMat[2])
+
+    ## Initializing APIs
     setMat <- function(mat1) {
         x <<- mat1
         dimMat <- dim(x)
@@ -34,12 +38,18 @@ cacheSolve <- function(x, ...) {
 ## Return a matrix that is the inverse of 'x'
     invMat <- x$getInv()
     mat <- x$getMat()
+
+    ## Initialize an identity matrix of the dimensions of original matrix
     idMat <- diag(nrow(mat))
+
+    ## Check if inverse matrix has been computed 
     if(identical(idMat,(mat %*% invMat)))
     {
         message("Getting cached Inverse")
         return(invMat)
     }
+
+    ## If inverse matrix not computed, compute it and cache the result
     mat <- x$getMat()
     invMat <- solve(mat, ...)
     x$setInv(invMat)
